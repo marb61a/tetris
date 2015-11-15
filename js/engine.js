@@ -1,4 +1,6 @@
-var canvas, content, input;
+var canvas;
+var content;
+var input;
 
 (function(){
     canvas = (function(){
@@ -14,6 +16,53 @@ var canvas, content, input;
 		c.frame = frame;
 		c.view = view;
 		c.ctx = ctx;
+		
+		c.flip = function(){
+			_fctx.clearRect(0, 0, _fw, _fh);
+			_fctx.drawImage(this.view, 0, 0, _fw, _fh);
+
+			this.ctx.clearRect(0, 0, _vw, _vh);
+		};
+		
+		Object.defineProperty(c, "width", {
+			set: function(w) {
+				this.view.width = w;
+				this.scale = _scale;
+			},
+			get: function() {
+				return _vw;
+			}
+		});
+		
+		Object.defineProperty(c, "height", {
+			set: function(h) {
+				this.view.height = h;
+				this.scale = _scale;
+			},
+			get: function() {
+				return _vh;
+			}
+		});
+		
+		Object.defineProperty(c, "scale", {
+			set: function(s) {
+				_scale = s;
+				_vw = this.view.width;
+				_vh = this.view.height;
+				_fw = this.frame.width = _vw * s;
+				_fh = this.frame.height = _vh * s;
+
+				_fctx["imageSmoothingEnabled"] = false;
+				["o", "ms", "moz", "webkit"].forEach(function(v) {
+					_fctx[v + "ImageSmoothingEnabled"] = false;
+				});
+			},
+			get: function() {
+				return _scale;
+			}
+		});
+		
+		c.scale = _scale;
         
         return c;
     })();
