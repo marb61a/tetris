@@ -51,7 +51,7 @@ var canvas, content, input;
 				_fh = this.frame.height = _vh * s;
 
 				_fctx["imageSmoothingEnabled"] = false;
-				["o", "ms", "moz", "webkit"].forEach(function(v) {
+				["o", "ms", "moz"].forEach(function(v) {
 					_fctx[v + "ImageSmoothingEnabled"] = false;
 				});
 			},
