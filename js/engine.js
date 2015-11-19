@@ -153,6 +153,37 @@ var canvas, content, input;
 			}
 		};
 		
+		function _getCode(e){
+			var t = e.type;
+			if(t === "keydown" || t === "keyup"){
+				return e.keyCode;
+			} else if(t === "mousedown" || t === "mouseup"){
+				switch (e.button) {
+					case 0:
+						return Buttons.LEFT;
+					case 1:
+						return Buttons.MIDDLE;
+					case 2:
+						return Buttons.RIGHT;
+				}
+			}
+		}
+		
+		function ondown(e) {
+			var action = _bindings[_getCode(e)];
+			if (!action) return;
+			_pressed[action] = !_down[action];
+			_down[action] = true;
+			e.preventDefault();
+		}
+
+		function onup(e) {
+			var action = _bindings[_getCode(e)];
+			if (!action) return;
+			_released.push(action);
+			e.preventDefault();
+		}
+		
 	});
 	
 	
