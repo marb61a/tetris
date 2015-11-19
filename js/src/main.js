@@ -6,7 +6,7 @@ requirejs.config({
 	}
 });
 
-require(["src/Game"], function(Game){
+require(["src/Game", "src/Tetris"], function(Game, Tetris){
 	var app = Game.extend({
 		init: function() {
 			canvas.width = 480;
@@ -27,8 +27,27 @@ require(["src/Game"], function(Game){
 		},
 		
 		tick: function(){
-			
+			if (this.hasLoad) {
+
+				this.tetris.update(input);
+				this.tetris.draw(canvas.ctx);
+
+			} else {
+
+				this.hasLoad = content.progress() === 1;
+				
+				if (this.hasLoad) {
+					this.tetris = new Tetris(10, 22);
+				}
+			}
 		}
+		});
 		
-		)
+		(function(){
+			var game = new App();
+			game.run();
+	
+			window.onblur = game.stop.bind(game);
+			window.onfocus = game.run.bind(game);
+		})();
 });

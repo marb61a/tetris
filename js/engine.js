@@ -184,6 +184,28 @@ var canvas, content, input;
 			e.preventDefault();
 		}
 		
+		function oncontext(e){
+			if (_bindings[Buttons.RIGHT]) {
+				e.preventDefault();
+			}
+		}
+		
+		function onmove(e){
+			var el = e.target,
+				ox = 0,
+				oy = 0;
+
+			do {
+				ox += el.offsetLeft;
+				oy += el.offsetTop;
+			} while (el = el.parentOffset);
+
+			mouse.x = e.clientX - ox;
+			mouse.y = e.clientY - oy;
+			
+			e.preventDefault();
+		}
+		
 	});
 	
 	
