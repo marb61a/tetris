@@ -36,8 +36,20 @@ define(["src/Numfont"], function(Numfont){
 			this.font.blue.draw(  ctx, tet.J, 432, 196, 5);
 
 			this.font.gray.draw(  ctx, tet.tot, 425, 220, 6);
-		}
+		},
+		
+		drawBlock: function(ctx, block, x, y) {
+					var id = block.ID,
+						size = 13;
+		
+					x = 180 + x*12;
+					y = 4 + y*12;
+		
+					ctx.drawImage(this.blocks, id*12, 0, size, size, x, y, size, size);
+				}
+			});
 		
 		
-    })
-})
+		return GameBoard;
+
+});
