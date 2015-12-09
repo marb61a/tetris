@@ -31,6 +31,32 @@ define(["src/GameBoard", "src/StatManager", "src/Tetramino", "src/Block", "src/R
 
 			this.random.initialize();
 			this.setNextTetramino();
+		},
+		
+		update : function(inpt){
+			this.currentTetramino.setTo(this.blockControl, Block.NONE);
+			
+			if (inpt.pressed("up")) {
+				this.moveRotate();
+			}
+			if (inpt.pressed("down")) {
+				this.moveDown();
+			}
+			if (inpt.pressed("left")) {
+				this.moveLeft();
+			}
+			if (inpt.pressed("right")) {
+				this.moveRight();
+			}
+			if (inpt.pressed("space")) {
+				this.hardDrop();
+			}
+
+			if (this.frames++ % 20 === 0) {
+				this.moveDown();
+			}
+			
+			this.currentTetramino.setTo(this.blockControl);
 		}
 		
     })
