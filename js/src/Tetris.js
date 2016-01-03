@@ -3,7 +3,7 @@ define(["src/GameBoard", "src/StatManager", "src/Tetramino", "src/Block", "src/R
 		
     var Tetris = Class.extend({
         
-        init: function(cols, rows) {
+        init : function(cols, rows) {
 
 			this.cols = cols;
 			this.rows = rows;
@@ -17,7 +17,7 @@ define(["src/GameBoard", "src/StatManager", "src/Tetramino", "src/Block", "src/R
 			this.reset();
 		},
 		
-		reset: function() {
+		reset : function() {
 
 			this.frames = 1;
 
@@ -59,7 +59,7 @@ define(["src/GameBoard", "src/StatManager", "src/Tetramino", "src/Block", "src/R
 			this.currentTetramino.setTo(this.blockControl);
 		},
 
-		draw: function(ctx) {
+		draw : function(ctx) {
 			this.gameBoard.draw(ctx, this.stat);
 
 			for (var i = 0; i < this.cols; i++) {
@@ -72,7 +72,7 @@ define(["src/GameBoard", "src/StatManager", "src/Tetramino", "src/Block", "src/R
 			}
 		},
 
-		setNextTetramino: function() {
+		setNextTetramino : function() {
 
 			this.currentTetramino = new Tetramino(this.random.nextID());
 			this.currentTetramino.x = 3;
@@ -81,5 +81,35 @@ define(["src/GameBoard", "src/StatManager", "src/Tetramino", "src/Block", "src/R
 			this.stat.incTetramino(this.currentTetramino.ID);
 		},
 		
-    })
+		moveLeft : function(){
+			var bc = this.blockControl,
+				ct = this.currentTetramino;
+				
+			if(ct.check(bc, -1, 0)){
+				ct.x -= 1;
+			}
+		},
+		
+		moveRight : function() {
+			var bc = this.blockControl,
+				ct = this.currentTetramino;
+
+			if (ct.check(bc, 1, 0)) {
+				ct.x += 1;
+			}
+		},
+		
+		moveRotate : function(dr){
+			dr = dr || 1;
+			var bc = this.blockControl,
+				ct = this.currentTetramino;
+			
+			if (ct.check(bc, 0, 0, dr)) {
+				ct.rotation = ct.getRotation(dr);
+			}
+		},
+		
+    });
+    
+    return Tetris;
 })
