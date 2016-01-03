@@ -57,7 +57,29 @@ define(["src/GameBoard", "src/StatManager", "src/Tetramino", "src/Block", "src/R
 			}
 			
 			this.currentTetramino.setTo(this.blockControl);
-		}
+		},
+
+		draw: function(ctx) {
+			this.gameBoard.draw(ctx, this.stat);
+
+			for (var i = 0; i < this.cols; i++) {
+				for (var j = 0; j < this.rows; j++) {
+					var b = this.blockControl[i][j];
+					if (b.solid) {
+						this.gameBoard.drawBlock(ctx, b, i, j);
+					}
+				}
+			}
+		},
+
+		setNextTetramino: function() {
+
+			this.currentTetramino = new Tetramino(this.random.nextID());
+			this.currentTetramino.x = 3;
+			this.currentTetramino.y = 0;
+
+			this.stat.incTetramino(this.currentTetramino.ID);
+		},
 		
     })
 })
