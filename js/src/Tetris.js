@@ -109,6 +109,37 @@ define(["src/GameBoard", "src/StatManager", "src/Tetramino", "src/Block", "src/R
 			}
 		},
 		
+		moveDown : function(){
+			var bc = this.blockControl,
+				ct = this.currentTetramino;
+			
+			if(ct.check(bc, 1, 0)){
+				ct.y += 1;
+			} else{
+				ct.setTo(bc);
+				this.checkRows();
+				this.setNextTetramino();
+			}	
+		},
+		
+		hardDrop : function(){
+			var bc = this.blockControl,
+				ct = this.currentTetramino,
+				move = true;
+			
+			while(move){
+				if(ct.check(bc, 1, 0)){
+					ct.y += 1;
+					this.stat.score += 2;
+				} else{
+					move = false;
+					ct.setTo(bc);
+					this.checkRows();
+					this.setNextTetramino();
+				}
+			}	
+		}
+		
     });
     
     return Tetris;
