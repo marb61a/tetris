@@ -98,8 +98,29 @@ define(function(){
 			} else {
 				return r - 1 >= 0 ? r - 1 : l - 1;
 			}
+	    },
+	    
+	    toString : function(){
+	    	var str = "";
+	    	
+	    	for(var i = 0; i < this._shapes.length; i++){
+	    		str += "\n";
+				var s = this._shapes[i];
+				for (var j = 0; j < s.length; j++) {
+					for (var k = 0; k < s[j].length; k++) {
+						str += s[j][k] ? "#" : ".";
+					}
+					str += "\n";
+				}
+	    	}
+	    	
+	    	return str;
 	    }
 	});
+	
+	for (var i = 0; i < IDs.length; i++) {
+		Tetramino[IDs[i]] = IDs[i];
+	}
     
     return Tetramino;
-})
+});
