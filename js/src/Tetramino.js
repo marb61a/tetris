@@ -51,6 +51,29 @@ define(function(){
 				s = t.slice(0);
 				this._shapes.push(s);
 			}
+	    },
+	    
+	    setTo : function(control, id){
+	    	id = id != null ? id :this.ID;
+	    	var shape = this._shapes[this.rotation];
+	    	
+	    	for(var i = 0; i < shape.length; i++){
+	    		for (var j = 0; j < shape.length; j++) {
+					if (shape[j][i]) {
+						control[this.x+i][this.y+j].setType(id);
+					}
+				}
+	    	}
+	    },
+	    
+	    getRotation : function(dr){
+	    	var r = this.rotation,
+				l = this._shapes.length;
+			if (dr > 0) {
+				return (r + 1) % l;
+			} else {
+				return r - 1 >= 0 ? r - 1 : l - 1;
+			}
 	    }
 	});
     
