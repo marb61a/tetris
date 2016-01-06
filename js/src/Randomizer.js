@@ -36,7 +36,23 @@ define(function(){
 
 			return array;
 		},
+		
+		nextInt: function() {
+			var  i = this.bag[this.idx];
+			this.idx++;
+			if (this.idx >= this.size) {
+				this.idx = 0;
+				this.shuffle();
+			}
+			return i;
+		},
+
+		nextID: function() {
+			return this._IDs[this.nextInt()];
+		}
         
     });
+    
+    return Randomizer;
     
 })
