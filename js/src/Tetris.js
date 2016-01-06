@@ -165,6 +165,15 @@ define(["src/GameBoard", "src/StatManager", "src/Tetramino", "src/Block", "src/R
 				this.stat.addScore(removed);
 				this.stat.checkLvlUp();
 			}
+		},
+		
+		removeRow: function(row) {
+			var bc = this.blockControl;
+			for (var i = row; i > 0; i--) {
+				for (var j = 0; j < this.cols; j++) {
+					bc[j][i].setType(bc[j][i - 1].ID);
+				}
+			}
 		}
 		
     });

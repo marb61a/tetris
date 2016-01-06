@@ -19,7 +19,23 @@ define(function(){
 			do {
 				this.shuffle();
 			} while (this.bag[0] === this._S_ID || this.bag[0] === this._Z_ID)
-		}
+		},
+		
+		shuffle: function(array) {
+			var array = array || this.bag,
+				counter = array.length,
+				temp,
+				index;
+
+			while (counter > 0) {
+				index = Math.round(Math.random() * --counter);
+				temp = array[counter];
+				array[counter] = array[index];
+				array[index] = temp;
+			}
+
+			return array;
+		},
         
     });
     
