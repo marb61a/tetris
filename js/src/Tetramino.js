@@ -1,5 +1,5 @@
-define(function(){
-    var shapeDef = {
+define(function() {
+    var ShapeDef = {
         L: "001"+"111"+"000",
 		I: "0000 1111 0000 0000",
 		T: "010 111 000",

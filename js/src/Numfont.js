@@ -7,8 +7,10 @@ define(function(){
 			this.width = img.width / 10;
         },
         
-        draw : function(ctx, num, x, y, padding){
-            if (padding) {
+        draw: function(ctx, num, x, y, padding) {
+			num = ""+num;
+
+			if (padding) {
 				num = num.length >= padding ? num : new Array(padding - num.length + 1).join("0") + num;
 			}
 
@@ -19,8 +21,8 @@ define(function(){
 					x, y, this.width, this.height);
 				x += this.width;
 			}
-        }
-    });
+		}
+	});
         
     return Numfont;
 });
