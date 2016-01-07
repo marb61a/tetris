@@ -206,7 +206,37 @@ var canvas, content, input;
 			e.preventDefault();
 		}
 		
-	});
-	
+		i.clearPressed = function() {
+			for (var i = 0; i < _released.length; i++) {
+				_down[_released[i]] = false;
+			}
+			_pressed = {};
+			_released = [];
+		}
+
+		i.pressed = function(action) {
+			return _pressed[action];
+		}
+
+		i.down = function(action) {
+			return _down[action];
+		}
+
+		i.released = function(action) {
+			return _released.indexOf(action) >= 0;
+		}
+		
+		canvas.frame.onmousedown = ondown;
+		canvas.frame.onmouseup = onup;
+		canvas.frame.onmousemove = onmove;
+		canvas.frame.oncontextmenu = oncontext;
+
+		document.onkeydown = ondown;
+		document.onkeyup = onup;
+		document.onmouseup = onup;
+
+		return i;
+		
+	})();
 	
 })();
