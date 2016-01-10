@@ -33,9 +33,9 @@ define(["src/GameBoard", "src/StatManager", "src/Tetramino", "src/Block", "src/R
 			this.setNextTetramino();
 		},
 		
-		update : function(inpt){
+		update : function(inpt) {
 			this.currentTetramino.setTo(this.blockControl, Block.NONE);
-			
+
 			if (inpt.pressed("up")) {
 				this.moveRotate();
 			}
@@ -55,7 +55,7 @@ define(["src/GameBoard", "src/StatManager", "src/Tetramino", "src/Block", "src/R
 			if (this.frames++ % 20 === 0) {
 				this.moveDown();
 			}
-			
+
 			this.currentTetramino.setTo(this.blockControl);
 		},
 

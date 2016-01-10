@@ -1,17 +1,18 @@
 define(function() {
     var ShapeDef = {
-        L: "001"+"111"+"000",
+		L: "001"+
+		   "111"+
+		   "000",
 		I: "0000 1111 0000 0000",
 		T: "010 111 000",
 		S: "011 110 000",
 		Z: "110 011 000",
 		O: "011 011 000",
 		J: "100 111 000"
-    };
-    
-    var IDs = [];
-    
-    for (var sd in ShapeDef) {
+	};
+
+	var IDs = [];
+	for (var sd in ShapeDef) {
 		ShapeDef[sd] = ShapeDef[sd].replace(/\s+/g, "");
 		IDs.push(sd);
 	}
@@ -53,18 +54,18 @@ define(function() {
 			}
 	    },
 	    
-	    setTo : function(control, id){
-	    	id = id != null ? id :this.ID;
-	    	var shape = this._shapes[this.rotation];
-	    	
-	    	for(var i = 0; i < shape.length; i++){
-	    		for (var j = 0; j < shape.length; j++) {
+	    setTo: function(control, id) {
+			id = id != null ? id : this.ID;
+			var shape = this._shapes[this.rotation];
+
+			for (var i = 0; i < shape.length; i++) {
+				for (var j = 0; j < shape.length; j++) {
 					if (shape[j][i]) {
 						control[this.x+i][this.y+j].setType(id);
 					}
 				}
-	    	}
-	    },
+			}
+		},
 	    
 	    check : function(control, dx, dy, dr){
 	    	dx = dx || 0;
@@ -121,6 +122,7 @@ define(function() {
 	for (var i = 0; i < IDs.length; i++) {
 		Tetramino[IDs[i]] = IDs[i];
 	}
-    
-    return Tetramino;
+
+
+	return Tetramino;
 });

@@ -1,16 +1,17 @@
-define(function(){
-    var _vendors = ["o", "ms", "moz", "webkit"];
-    
-    for(var i = _vendors.length; i-- && !window.requestAnimationFrame;){
-        var v = _vendors[i];
+define(function() {
+
+	var _vendors = ["o", "ms", "moz", "webkit"];
+	for (var i = _vendors.length; i-- && !window.requestAnimationFrame;) {
+		var v = _vendors[i];
 
 		window.requestAnimationFrame = window[v + "RequestAnimationFrame"];
 		window.cancelAnimationFrame = window[v + "CancelAnimationFrame"] ||
 									  window[v + "CancelRequestAnimationFrame"];
-    }
-    
-    var Game = Class.extend({
-        tick: function() {
+	}
+
+	var Game = Class.extend({
+
+		tick: function() {
 			console.warn("should overrided by childclass!");
 		},
 
@@ -37,7 +38,8 @@ define(function(){
 			}
 			this._reqframe = window.requestAnimationFrame(loop);
 		}
-    });
-    
-    return Game;
+	});
+
+
+	return Game;
 });
