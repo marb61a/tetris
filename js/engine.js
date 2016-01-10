@@ -1,27 +1,30 @@
 var canvas, content, input;
+(function() {
 
-(function(){
-    canvas = (function(){
-        var c = {},
-            frame = document.getElementsByTagName("canvas")[0],
+	canvas = (function() {
+
+		var c = {},
+
+			frame = document.getElementsByTagName("canvas")[0],
 			_fctx = frame.getContext("2d"),
-			
+
 			view = document.createElement("canvas"),
 			ctx = view.getContext("2d"),
 
 			_fw, _fh, _vw, _vh, _scale = 1;
 
+
 		c.frame = frame;
 		c.view = view;
 		c.ctx = ctx;
-		
-		c.flip = function(){
+
+		c.flip = function() {
 			_fctx.clearRect(0, 0, _fw, _fh);
 			_fctx.drawImage(this.view, 0, 0, _fw, _fh);
 
 			this.ctx.clearRect(0, 0, _vw, _vh);
 		};
-		
+
 		Object.defineProperty(c, "width", {
 			set: function(w) {
 				this.view.width = w;
@@ -31,7 +34,6 @@ var canvas, content, input;
 				return _vw;
 			}
 		});
-		
 		Object.defineProperty(c, "height", {
 			set: function(h) {
 				this.view.height = h;
@@ -41,7 +43,6 @@ var canvas, content, input;
 				return _vh;
 			}
 		});
-		
 		Object.defineProperty(c, "scale", {
 			set: function(s) {
 				_scale = s;
@@ -51,7 +52,7 @@ var canvas, content, input;
 				_fh = this.frame.height = _vh * s;
 
 				_fctx["imageSmoothingEnabled"] = false;
-				["o", "ms", "moz"].forEach(function(v) {
+				["o", "ms", "moz", "webkit"].forEach(function(v) {
 					_fctx[v + "ImageSmoothingEnabled"] = false;
 				});
 			},
@@ -59,13 +60,17 @@ var canvas, content, input;
 				return _scale;
 			}
 		});
-		
+
 		c.scale = _scale;
-        
-        return c;
-    })();
-    
-    content = (function() {
+
+		return c;
+	})();
+
+
+
+	content = (function() {
+
+
 		var c = {},
 
 			_files = {},
@@ -81,7 +86,9 @@ var canvas, content, input;
 		};
 
 		c.load = function(name, src) {
+
 			src = src || name;
+
 			_filecount++;
 
 			switch (src.split(".").pop()) {
@@ -107,27 +114,32 @@ var canvas, content, input;
 					break;
 			}
 		};
+
+
 		return c;
 
 	})();
-	
-	
-	input = (function(){
+
+
+	input = (function() {
+
 		var i = {},
+
 			_bindings = {},
 			_pressed = {},
 			_down = {},
 			_released = [],
 
 			mouse = { x: 0, y: 0 };
+
 		i.mouse = mouse;
-		
+
 		var Buttons = {
 			LEFT: -1,
 			MIDDLE: -2,
 			RIGHT: -3
 		};
-		
+
 		var Keys = {
 			SPACE: 32,
 			LEFT_ARROW: 37,
@@ -139,10 +151,10 @@ var canvas, content, input;
 		for (var ch = 65; ch <= 90; ch++) {
 			Keys[String.fromCharCode(ch)] = ch;
 		}
-		
+
 		i.Buttons = Buttons;
 		i.Keys = Keys;
-		
+
 		i.bindKey = function(action, keys) {
 			if (typeof keys === "number") {
 				_bindings[keys] = action;
@@ -152,12 +164,12 @@ var canvas, content, input;
 				_bindings[keys[i]] = action;
 			}
 		};
-		
-		function _getCode(e){
+
+		function _getCode(e) {
 			var t = e.type;
-			if(t === "keydown" || t === "keyup"){
+			if (t === "keydown" || t === "keyup") {
 				return e.keyCode;
-			} else if(t === "mousedown" || t === "mouseup"){
+			} else if (t === "mousedown" || t === "mouseup") {
 				switch (e.button) {
 					case 0:
 						return Buttons.LEFT;
@@ -168,7 +180,7 @@ var canvas, content, input;
 				}
 			}
 		}
-		
+
 		function ondown(e) {
 			var action = _bindings[_getCode(e)];
 			if (!action) return;
@@ -183,14 +195,14 @@ var canvas, content, input;
 			_released.push(action);
 			e.preventDefault();
 		}
-		
-		function oncontext(e){
+
+		function oncontext(e) {
 			if (_bindings[Buttons.RIGHT]) {
 				e.preventDefault();
 			}
 		}
-		
-		function onmove(e){
+
+		function onmove(e) {
 			var el = e.target,
 				ox = 0,
 				oy = 0;
@@ -202,30 +214,31 @@ var canvas, content, input;
 
 			mouse.x = e.clientX - ox;
 			mouse.y = e.clientY - oy;
-			
+
 			e.preventDefault();
 		}
-		
+
 		i.clearPressed = function() {
 			for (var i = 0; i < _released.length; i++) {
 				_down[_released[i]] = false;
 			}
 			_pressed = {};
 			_released = [];
-		}
+		};
 
 		i.pressed = function(action) {
 			return _pressed[action];
-		}
+		};
 
 		i.down = function(action) {
 			return _down[action];
-		}
+		};
 
 		i.released = function(action) {
 			return _released.indexOf(action) >= 0;
-		}
-		
+		};
+
+
 		canvas.frame.onmousedown = ondown;
 		canvas.frame.onmouseup = onup;
 		canvas.frame.onmousemove = onmove;
@@ -236,7 +249,7 @@ var canvas, content, input;
 		document.onmouseup = onup;
 
 		return i;
-		
+
 	})();
-	
+
 })();
